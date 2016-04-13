@@ -137,6 +137,7 @@ namespace beplusService.Controllers
         public async Task<IHttpActionResult> RegisterOfflineDonor(BepDonor input)
         {
             // Does the donor data exist?
+            
             var count = context.BepDonors.Where(x => (x.Phone == input.Phone && x.OnlineStatus == true)).Count();
             if (count > 0)
             {
@@ -147,24 +148,29 @@ namespace beplusService.Controllers
             {
                 return BadRequest("Email number already registered!");
             }
-
-            BepDonor donor = context.BepDonors.Where(x => (x.Email == input.Email || x.Phone == input.Phone)).First();
-            donor.Subscribed = true;
-            donor.OnlineStatus = true;
-            donor.Activated = true;
-            donor.Password = input.Password;
-            donor.LocationLat = input.LocationLat;
-            donor.LocationLong = input.LocationLong;
-
-            using (var dbCtx = new beplusContext())
+            count = context.BepDonors.Where(x => (x.Email == input.Email || x.Phone == input.Phone)).Count();
+            if (count == 1)
             {
-                //3. Mark entity as modified
-                dbCtx.Entry(donor).State = System.Data.Entity.EntityState.Modified;
 
-                //4. call SaveChanges
-                dbCtx.SaveChanges();
+                using (var db = new beplusContext())
+                {
+                    BepDonor donor = db.BepDonors.SingleOrDefault(x => (x.Email == input.Email || x.Phone == input.Phone));
+                    donor.Subscribed = true;
+                    donor.OnlineStatus = true;
+                    donor.Activated = true;
+                    donor.Password = input.Password;
+                    donor.LocationLat = input.LocationLat;
+                    donor.LocationLong = input.LocationLong;
+                    donor.EmergencyAvailability = input.EmergencyAvailability;
+
+                    db.SaveChanges();
+
+
+                }
+                return Ok("Donor registered successfully!");
             }
-            return Ok("Donor registered successfully!");
+            else
+                return BadRequest("Email or Phone not registered!");
         }
         [Route("api/importDonorData", Name = "ImportDonorData")]
         public async Task<IHttpActionResult> ImportDonorData(BepDonor donor)
