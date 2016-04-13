@@ -64,7 +64,8 @@ namespace beplusService.Controllers
             {
                 return BadRequest("Email number already registered!");
             }
-            organization.Activated = false;
+            //Provision to send out activation email. Until implemented, the activation status will be true for all registering parties
+            organization.Activated = true;
 
             BepOrganization current = await InsertAsync(organization);
             return Ok("Organization registered successfully!");

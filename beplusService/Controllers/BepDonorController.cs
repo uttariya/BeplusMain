@@ -103,8 +103,75 @@ namespace beplusService.Controllers
         public async Task<IHttpActionResult> RegisterNewDonor(BepDonor donor)
         {
             // Does the donor data exist?
-            var count = context.BepDonors.Where(x => x.Phone == donor.Phone).Count();
+            var count = context.BepDonors.Where(x => (x.Phone == donor.Phone && x.OnlineStatus == true)).Count();
             if (count >0)
+            {
+                return BadRequest("Phone number already registered!");
+            }
+            count = context.BepDonors.Where(x => (x.Email == donor.Email && x.OnlineStatus == true)).Count();
+            if (count > 0)
+            {
+                return BadRequest("Email number already registered!");
+            }
+            if(string.IsNullOrEmpty(donor.ReceiverGroups))
+                switch(donor.BloodGroup)
+                {
+                    case "A+": donor.ReceiverGroups = "A+,AB+"; break;
+                    case "O+": donor.ReceiverGroups = "A+,AB+,O+,B+"; break;
+                    case "B+": donor.ReceiverGroups = "B+,AB+"; break;
+                    case "AB+": donor.ReceiverGroups = "AB+"; break;
+                    case "A-": donor.ReceiverGroups = "A+,AB+,A-,AB-"; break;
+                    case "O-": donor.ReceiverGroups = "A+,AB+,O+,B+,A-,AB-,O-,B-"; break;
+                    case "B-": donor.ReceiverGroups = "B+,AB+,B-,AB-"; break;
+                    case "AB-": donor.ReceiverGroups = "AB+,AB-"; break;
+                }
+            donor.Subscribed = true;
+            donor.OnlineStatus = true;
+            //Provision to send out activation email. Until implemented, the activation status will be true for all registering parties
+            donor.Activated = true;
+
+            BepDonor current = await InsertAsync(donor);
+            return Ok("Donor registered successfully!");
+        }
+        [Route("api/registerOfflineDonor", Name = "RegisterOfflineDonor")]
+        public async Task<IHttpActionResult> RegisterOfflineDonor(BepDonor input)
+        {
+            // Does the donor data exist?
+            var count = context.BepDonors.Where(x => (x.Phone == input.Phone && x.OnlineStatus == true)).Count();
+            if (count > 0)
+            {
+                return BadRequest("Phone number already registered!");
+            }
+            count = context.BepDonors.Where(x => (x.Email == input.Email && x.OnlineStatus == true)).Count();
+            if (count > 0)
+            {
+                return BadRequest("Email number already registered!");
+            }
+
+            BepDonor donor = context.BepDonors.Where(x => (x.Email == input.Email || x.Phone == input.Phone)).First();
+            donor.Subscribed = true;
+            donor.OnlineStatus = true;
+            donor.Activated = true;
+            donor.Password = input.Password;
+            donor.LocationLat = input.LocationLat;
+            donor.LocationLong = input.LocationLong;
+
+            using (var dbCtx = new beplusContext())
+            {
+                //3. Mark entity as modified
+                dbCtx.Entry(donor).State = System.Data.Entity.EntityState.Modified;
+
+                //4. call SaveChanges
+                dbCtx.SaveChanges();
+            }
+            return Ok("Donor registered successfully!");
+        }
+        [Route("api/importDonorData", Name = "ImportDonorData")]
+        public async Task<IHttpActionResult> ImportDonorData(BepDonor donor)
+        {
+            // Does the donor data exist?
+            var count = context.BepDonors.Where(x => x.Phone == donor.Phone).Count();
+            if (count > 0)
             {
                 return BadRequest("Phone number already registered!");
             }
@@ -113,26 +180,31 @@ namespace beplusService.Controllers
             {
                 return BadRequest("Email number already registered!");
             }
-            switch(donor.BloodGroup)
-            {
-                case "A+": donor.ReceiverGroups = "A+,AB+"; break;
-                case "O+": donor.ReceiverGroups = "A+,AB+,O+,B+"; break;
-                case "B+": donor.ReceiverGroups = "B+,AB+"; break;
-                case "AB+": donor.ReceiverGroups = "AB+"; break;
-                case "A-": donor.ReceiverGroups = "A+,AB+,A-,AB-"; break;
-                case "O-": donor.ReceiverGroups = "A+,AB+,O+,B+,A-,AB-,O-,B-"; break;
-                case "B-": donor.ReceiverGroups = "B+,AB+,B-,AB-"; break;
-                case "AB-": donor.ReceiverGroups = "AB+,AB-"; break;
-            }
+            if(!string.IsNullOrEmpty(donor.BloodGroup))
+                switch (donor.BloodGroup)
+                {
+                    case "A+": donor.ReceiverGroups = "A+,AB+"; break;
+                    case "O+": donor.ReceiverGroups = "A+,AB+,O+,B+"; break;
+                    case "B+": donor.ReceiverGroups = "B+,AB+"; break;
+                    case "AB+": donor.ReceiverGroups = "AB+"; break;
+                    case "A-": donor.ReceiverGroups = "A+,AB+,A-,AB-"; break;
+                    case "O-": donor.ReceiverGroups = "A+,AB+,O+,B+,A-,AB-,O-,B-"; break;
+                    case "B-": donor.ReceiverGroups = "B+,AB+,B-,AB-"; break;
+                    case "AB-": donor.ReceiverGroups = "AB+,AB-"; break;
+                }
             donor.Subscribed = true;
             donor.EmergencyAvailability = false;
             donor.OnlineStatus = false;
             donor.Activated = false;
 
             BepDonor current = await InsertAsync(donor);
-            return Ok("Donor registered successfully!");
+
+            //Send Mail to offline donor with link to download the application
+
+
+            //End send mail code
+            return Ok("Offline Donor registered successfully!");
         }
-        
         [Route("api/loginDonor", Name = "LoginDonor")]
         public IHttpActionResult LoginDonor(LoginData logindata)
         {
