@@ -70,6 +70,31 @@ namespace beplusService.Controllers
             BepOrganization current = await InsertAsync(organization);
             return Ok("Organization registered successfully!");
         }
+        [Route("api/activateOrganization", Name = "ActivateOrganization")]
+        [HttpGet]
+        public async Task<IHttpActionResult> ActivateOrganization(string Id)
+        {
+            var count = context.BepOrganizations.Where(x => (x.Id == Id && x.Activated == true)).Count();
+            if (count == 1)
+            {
+                return BadRequest("You are already registered. Please login using our application.");
+            }
+            count = context.BepOrganizations.Where(x => (x.Id == Id && x.Activated == false)).Count();
+            if (count == 0)
+            {
+                return BadRequest("An error has occured. Please try registering again.");
+            }
+            else
+            {
+                using (var db = new beplusContext())
+                {
+                    BepOrganization donor = db.BepOrganizations.SingleOrDefault(x => x.Id == Id);
+                    donor.Activated = true;
+                    db.SaveChanges();                    
+                }
+                return Ok("Your account has been activated! Please login using our app.");
+            }
+        }
         [Route("api/loginOrganization", Name = "LoginOrganization")]
         public IHttpActionResult LoginOrganization(LoginData logindata)
         {
@@ -100,6 +125,5 @@ namespace beplusService.Controllers
             }
             else return BadRequest("Invalid login credentials!");
         }
-
     }
 }

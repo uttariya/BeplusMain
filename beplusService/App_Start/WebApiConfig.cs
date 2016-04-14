@@ -38,6 +38,17 @@ namespace beplusService
                     .ForMember(dst => dst.OrgEmail, map => map.MapFrom(x => x.BepOrganization.Email))
                     .ForMember(dst => dst.OrgPhone, map => map.MapFrom(x => x.BepOrganization.Phone))
                     .ForMember(dst => dst.OrgImgurl, map => map.MapFrom(x => x.BepOrganization.Imgurl));
+                cfg.CreateMap<BepOrganization, BepOrganizationDTO>();
+                cfg.CreateMap<BepOrganizationDTO, BepOrganization>();
+                cfg.CreateMap<BepEventDTO, BepEvent>();
+                cfg.CreateMap<BepEvent,BepEventDTO>()
+                    .ForMember(dst => dst.OrgId, map => map.MapFrom(x => x.BepOrganization.Id))
+                    .ForMember(dst => dst.OrgName, map => map.MapFrom(x => x.BepOrganization.Name))
+                    .ForMember(dst => dst.OrgAbout, map => map.MapFrom(x => x.BepOrganization.About))
+                    .ForMember(dst => dst.OrgLocality, map => map.MapFrom(x => x.BepOrganization.Locality))
+                    .ForMember(dst => dst.OrgEmail, map => map.MapFrom(x => x.BepOrganization.Email))
+                    .ForMember(dst => dst.OrgPhone, map => map.MapFrom(x => x.BepOrganization.Phone))
+                    .ForMember(dst => dst.OrgImgurl, map => map.MapFrom(x => x.BepOrganization.Imgurl));
 
             });
 

@@ -89,7 +89,6 @@ namespace beplusService.Controllers
         // POST tables/BepDonor
         public async Task<IHttpActionResult> PostBepDonor(BepDonor item)
         {
-
             BepDonor current = await InsertAsync(item);
             return CreatedAtRoute("Tables", new { id = current.Id }, current);
         }
@@ -128,10 +127,35 @@ namespace beplusService.Controllers
             donor.Subscribed = true;
             donor.OnlineStatus = true;
             //Provision to send out activation email. Until implemented, the activation status will be true for all registering parties
-            donor.Activated = true;
+            donor.Activated = false;
 
             BepDonor current = await InsertAsync(donor);
             return Ok("Donor registered successfully!");
+        }
+        [Route("api/activateDonor", Name = "ActivateDonor")]
+        [HttpGet]
+        public async Task<IHttpActionResult> ActivateDonor(string Id)
+        {
+            var count = context.BepDonors.Where(x => (x.Id == Id && x.Activated == true)).Count();
+            if (count == 1)
+            {
+                return BadRequest("You are already registered. Please login using our application.");
+            }
+            count = context.BepDonors.Where(x => (x.Id == Id && x.Activated == false)).Count();
+            if (count == 0)
+            {
+                return BadRequest("An error has occured. Please try registering again.");
+            }
+            else
+            {
+                using (var db = new beplusContext())
+                {
+                    BepDonor donor = db.BepDonors.SingleOrDefault(x => x.Id == Id);
+                    donor.Activated = true;
+                    db.SaveChanges();                    
+                }
+                return Ok("Your account has been activated! Please login using our app.");
+            }
         }
         [Route("api/registerOfflineDonor", Name = "RegisterOfflineDonor")]
         public async Task<IHttpActionResult> RegisterOfflineDonor(BepDonor input)
@@ -146,7 +170,7 @@ namespace beplusService.Controllers
             count = context.BepDonors.Where(x => (x.Email == input.Email && x.OnlineStatus == true)).Count();
             if (count > 0)
             {
-                return BadRequest("Email number already registered!");
+                return BadRequest("Email id already registered!");
             }
             count = context.BepDonors.Where(x => (x.Email == input.Email || x.Phone == input.Phone)).Count();
             if (count == 1)
@@ -207,7 +231,7 @@ namespace beplusService.Controllers
 
             //Send Mail to offline donor with link to download the application
 
-
+            Sender.SendMail(donor.Email, "please download our APP", "app link");
             //End send mail code
             return Ok("Offline Donor registered successfully!");
         }

@@ -44,6 +44,8 @@ namespace beplusService.Models
         public System.Data.Entity.DbSet<beplusService.DataObjects.BepOrganization> BepOrganizations { get; set; }
 
         public System.Data.Entity.DbSet<beplusService.DataObjects.BepDonor> BepDonors { get; set; }
+
+        public System.Data.Entity.DbSet<beplusService.DataObjects.BepEvent> BepEvents { get; set; }
     }
 
 }
