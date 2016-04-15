@@ -7,6 +7,7 @@ using Microsoft.WindowsAzure.Mobile.Service;
 using beplusService.DataObjects;
 using beplusService.Models;
 using System.Collections.Generic;
+using AutoMapper;
 
 namespace beplusService.Controllers
 {
@@ -20,64 +21,21 @@ namespace beplusService.Controllers
         }
 
         // GET tables/BepDonor
-        public IQueryable<BepDonorDTO> GetAllBepDonor()
+        public ICollection<BepDonorDTO> GetAllBepDonor()
         {
-            return Query().Select(x => new BepDonorDTO()
-            {
-                Id = x.Id,
-                Name = x.Name,
-                Phone = x.Phone,
-                Email = x.Email,
-                BloodGroup = x.BloodGroup,
-                ReceiverGroups = x.ReceiverGroups,
-                Allergies = x.Allergies,
-                Diseases = x.Diseases,
-                LocationLat = x.LocationLat,
-                LocationLong = x.LocationLong,
-                EmergencyAvailability = x.EmergencyAvailability,
-                Subscribed = x.Subscribed,
-                OnlineStatus = x.OnlineStatus,
-                Activated = x.Activated,
-                Imgurl = x.Imgurl,
-                OrgId = x.BepOrganization.Id,
-                OrgName = x.BepOrganization.Name,
-                OrgAbout = x.BepOrganization.About,
-                OrgImgurl = x.BepOrganization.Imgurl,
-                OrgEmail = x.BepOrganization.Email,
-                OrgPhone = x.BepOrganization.Phone,
-                OrgLocality = x.BepOrganization.Locality
-            });
+            var donorlist = Query().ToList();
+            List<BepDonorDTO> dtolist = new List<BepDonorDTO>();
+            foreach (BepDonor donor in donorlist)
+                dtolist.Add(Mapper.Map<BepDonorDTO>(donor));
+            return dtolist;
         }
 
         // GET tables/BepDonor/48D68C86-6EA6-4C25-AA33-223FC9A27959
-        public SingleResult<BepDonorDTO> GetBepDonor(string id)
+        public BepDonorDTO GetBepDonor(string id)
         {
-            var result = Lookup(id).Queryable.Select(x => new BepDonorDTO()
-            {
-                Id = x.Id,
-                Name = x.Name,
-                Phone = x.Phone,
-                Email = x.Email,
-                BloodGroup = x.BloodGroup,
-                ReceiverGroups = x.ReceiverGroups,
-                Allergies = x.Allergies,
-                Diseases = x.Diseases,
-                LocationLat = x.LocationLat,
-                LocationLong = x.LocationLong,
-                EmergencyAvailability = x.EmergencyAvailability,
-                Subscribed = x.Subscribed,
-                OnlineStatus = x.OnlineStatus,
-                Activated = x.Activated,
-                Imgurl = x.Imgurl,
-                OrgId = x.BepOrganization.Id,
-                OrgName = x.BepOrganization.Name,
-                OrgAbout = x.BepOrganization.About,
-                OrgImgurl = x.BepOrganization.Imgurl,
-                OrgEmail = x.BepOrganization.Email,
-                OrgPhone = x.BepOrganization.Phone,
-                OrgLocality = x.BepOrganization.Locality
-            });
-            return SingleResult<BepDonorDTO>.Create(result); 
+            var donor = Lookup(id).Queryable.SingleOrDefault();
+            BepDonorDTO dto = Mapper.Map<BepDonorDTO>(donor);
+            return dto;
         }
 
         // PATCH tables/BepDonor/48D68C86-6EA6-4C25-AA33-223FC9A27959
@@ -152,6 +110,7 @@ namespace beplusService.Controllers
                 {
                     BepDonor donor = db.BepDonors.SingleOrDefault(x => x.Id == Id);
                     donor.Activated = true;
+                    db.Entry(donor).State = System.Data.Entity.EntityState.Modified;
                     db.SaveChanges();                    
                 }
                 return Ok("Your account has been activated! Please login using our app.");
@@ -187,6 +146,7 @@ namespace beplusService.Controllers
                     donor.LocationLong = input.LocationLong;
                     donor.EmergencyAvailability = input.EmergencyAvailability;
 
+                    db.Entry(donor).State = System.Data.Entity.EntityState.Modified;
                     db.SaveChanges();
 
 
@@ -246,33 +206,7 @@ namespace beplusService.Controllers
             int count = donorlist.Count;
             if (count==1)
             {
-                var current = donorlist[0];
-                var result = Lookup(current.Id).Queryable.Select(x => new BepDonorDTO()
-                {
-                    Id = x.Id,
-                    Name = x.Name,
-                    Phone = x.Phone,
-                    Email = x.Email,
-                    BloodGroup = x.BloodGroup,
-                    ReceiverGroups = x.ReceiverGroups,
-                    Allergies = x.Allergies,
-                    Diseases = x.Diseases,
-                    LocationLat = x.LocationLat,
-                    LocationLong = x.LocationLong,
-                    EmergencyAvailability = x.EmergencyAvailability,
-                    Subscribed = x.Subscribed,
-                    OnlineStatus = x.OnlineStatus,
-                    Activated = x.Activated,
-                    Imgurl = x.Imgurl,
-                    OrgId = x.BepOrganization.Id,
-                    OrgName = x.BepOrganization.Name,
-                    OrgAbout = x.BepOrganization.About,
-                    OrgImgurl = x.BepOrganization.Imgurl,
-                    OrgEmail = x.BepOrganization.Email,
-                    OrgPhone = x.BepOrganization.Phone,
-                    OrgLocality = x.BepOrganization.Locality
-                });
-                return Ok(SingleResult<BepDonorDTO>.Create(result));
+                return Ok(Mapper.Map<BepDonorDTO>(donorlist[0]));
             }
             else return BadRequest("Invalid login credentials!");
         }

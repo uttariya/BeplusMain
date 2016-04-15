@@ -7,6 +7,7 @@ using Microsoft.WindowsAzure.Mobile.Service;
 using beplusService.DataObjects;
 using beplusService.Models;
 using System.Collections.Generic;
+using AutoMapper;
 
 namespace beplusService.Controllers
 {
@@ -21,15 +22,22 @@ namespace beplusService.Controllers
         }
 
         // GET tables/BepOrganization
-        public IQueryable<BepOrganization> GetAllBepOrganization()
+        public ICollection<BepOrganizationDTO> GetAllBepOrganization()
         {
-            return Query(); 
+            var orglist = Query().ToList();
+            List<BepOrganizationDTO> dtolist = new List<BepOrganizationDTO>();
+            foreach(BepOrganization org in orglist)
+                dtolist.Add(Mapper.Map<BepOrganizationDTO>(org));
+            return dtolist;
+
         }
 
         // GET tables/BepOrganization/48D68C86-6EA6-4C25-AA33-223FC9A27959
-        public SingleResult<BepOrganization> GetBepOrganization(string id)
+        public BepOrganizationDTO GetBepOrganization(string id)
         {
-            return Lookup(id);
+            var org =  Lookup(id).Queryable.SingleOrDefault();
+            BepOrganizationDTO orgdto = Mapper.Map<BepOrganizationDTO>(org);
+            return orgdto;
         }
 
         // PATCH tables/BepOrganization/48D68C86-6EA6-4C25-AA33-223FC9A27959
@@ -88,8 +96,9 @@ namespace beplusService.Controllers
             {
                 using (var db = new beplusContext())
                 {
-                    BepOrganization donor = db.BepOrganizations.SingleOrDefault(x => x.Id == Id);
-                    donor.Activated = true;
+                    BepOrganization org = db.BepOrganizations.SingleOrDefault(x => x.Id == Id);
+                    org.Activated = true;
+                    db.Entry(org).State = System.Data.Entity.EntityState.Modified;
                     db.SaveChanges();                    
                 }
                 return Ok("Your account has been activated! Please login using our app.");
@@ -106,22 +115,7 @@ namespace beplusService.Controllers
             int count = orglist.Count;
             if (count == 1)
             {
-                var current = orglist[0];
-                var result = Lookup(current.Id).Queryable.Select(x => new BepOrganizationDTO()
-                {
-                    Id = x.Id,
-                    About = x.About,
-                    Locality = x.Locality,
-                    Name = x.Name,
-                    Phone = x.Phone,
-                    Email = x.Email,
-                    Chairperson = x.Chairperson,
-                    LocationLat = x.LocationLat,
-                    LocationLong = x.LocationLong,
-                    Activated = x.Activated,
-                    Imgurl = x.Imgurl
-                });
-                return Ok(SingleResult<BepOrganizationDTO>.Create(result));
+                return Ok(Mapper.Map<BepOrganizationDTO>(orglist[0]));
             }
             else return BadRequest("Invalid login credentials!");
         }
