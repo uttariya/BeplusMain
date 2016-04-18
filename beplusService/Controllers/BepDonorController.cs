@@ -1,4 +1,4 @@
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Controllers;
@@ -68,7 +68,7 @@ namespace beplusService.Controllers
             count = context.BepDonors.Where(x => (x.Email == donor.Email && x.OnlineStatus == true)).Count();
             if (count > 0)
             {
-                return BadRequest("Email number already registered!");
+                return BadRequest("Email Id already registered!");
             }
             if(string.IsNullOrEmpty(donor.ReceiverGroups))
                 switch(donor.BloodGroup)
@@ -87,7 +87,7 @@ namespace beplusService.Controllers
             //Provision to send out activation email. Until implemented, the activation status will be true for all registering parties
             donor.Activated = false;
             string body = "<!DOCTYPE html><html><head></head><body><div style=\"background-color:#800000;padding:20px\"><h1 style=\"color:white \">Welcome!</h1></div><p>please click <a title=\"here\" href=\"http://bplusemailverify.azurewebsites.net/Webform1.aspx?type=1&userid=" + donor.Id + "\" target=\"_blank\">here</a> to register yourself successfully.</p></body></html>";
-            Sender.SendMail(donor.Email, "please click to activate email", body);
+            Sender.SendMail(donor.Email, "Please Activate Your Account", body);
             BepDonor current = await InsertAsync(donor);
             return Ok("Donor registered successfully!");
         }
@@ -169,7 +169,7 @@ namespace beplusService.Controllers
             count = context.BepDonors.Where(x => x.Email == donor.Email).Count();
             if (count > 0)
             {
-                return BadRequest("Email number already registered!");
+                return BadRequest("Email Id already registered!");
             }
             if(!string.IsNullOrEmpty(donor.BloodGroup))
                 switch (donor.BloodGroup)
