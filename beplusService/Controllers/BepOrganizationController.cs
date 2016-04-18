@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Controllers;
@@ -73,6 +73,8 @@ namespace beplusService.Controllers
                 return BadRequest("Email number already registered!");
             }
             //Provision to send out activation email. Until implemented, the activation status will be true for all registering parties
+            string body = "<!DOCTYPE html><html><head></head><body><div style=\"background-color:#800000;padding:20px\"><h1 style=\"color:white \">Welcome!</h1></div><p>please click <a title=\"here\" href=\"http://bplusemailverify.azurewebsites.net/Webform1.aspx?type=2&userid=" + organization.Id + "\" target=\"_blank\">here</a>to register yourself successfully.</p></body></html>";
+            Sender.SendMail(organization.Email, "please click to activate email", body);
             organization.Activated = true;
 
             BepOrganization current = await InsertAsync(organization);
