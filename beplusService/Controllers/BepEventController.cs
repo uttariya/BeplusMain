@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Controllers;
@@ -44,7 +44,9 @@ namespace beplusService.Controllers
         public async Task<IHttpActionResult> PostBepEvent(BepEvent item)
         {
             BepEvent current = await InsertAsync(item);
+            
             return CreatedAtRoute("Tables", new { id = current.Id }, current);
+
         }
 
         // DELETE tables/BepEvent/48D68C86-6EA6-4C25-AA33-223FC9A27959
@@ -74,7 +76,10 @@ namespace beplusService.Controllers
             foreach (BepDonor donor in donorList)
             {
                 //Send mail with get query of the event id that will display the event details on a webapp based on the response
-                //Sender.SendMail(donor.Email, "Event details", "You have been invited to a blood drive");
+                string mail = "<!DOCTYPE html><html><head><style>table, th, td {border:1px solid black;border-collapse:collapse;}th, td {padding:5px;}</style></head><body><div style=\"border:5px solid #800000; padding:10px\"><div style=\"background-color:#800000;padding:20px\"><h1 style=\"color:white \">Welcome!</h1></div><p> dear" + " "+donor.Name + ",</p><p> you are cordially invited to this event.please grace us with the your presence. The details are as given below.</br>Thank you.</p><table style=\"width:100%\"><tbody><tr><td>organization</td><td>" +
+                    bepEventDTO.OrgName + "</td></tr><tr><td>venue</td><td>" + bepEventDTO.Venue + "</td></tr><tr><td>about</td><td>" + bepEventDTO.About + "</td></tr><tr><td>date</td><td>" + (bepEventDTO.Date).ToString() + "</td></tr><tr><td>phone</td><td>" + bepEventDTO.OrgPhone + "</td></tr><tr><td>email</td><td>" + bepEventDTO.OrgEmail + "</td></tr></tbody></table></div></body></html>";
+
+                Sender.SendMail(donor.Email, "Event details",mail );
             }
             //End send mail code
             foreach (BepDonor donor in onlineDonorList)
