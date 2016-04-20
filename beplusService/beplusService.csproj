@@ -196,9 +196,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\BepBloodRequestController.cs" />
     <Compile Include="Controllers\BepDonorController.cs" />
     <Compile Include="Controllers\BepEventController.cs" />
     <Compile Include="Controllers\BepOrganizationController.cs" />
+    <Compile Include="DataObjects\BepBloodRequest.cs" />
     <Compile Include="DataObjects\BepDonor.cs" />
     <Compile Include="DataObjects\BepEvent.cs" />
     <Compile Include="DataObjects\BepEventDTO.cs" />
