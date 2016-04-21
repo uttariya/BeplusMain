@@ -104,7 +104,7 @@ namespace beplusService.Controllers
                 double longdist = Math.Cos((Math.PI * item.LocationLat) / 180) * 111.320;
                 double ulng = item.LocationLong + (kms / longdist), llng = item.LocationLong - (kms / longdist);
                 List<BepDonor> onlineDonorList = context.BepDonors.Where(x => ((
-                (x.LocationLat < ulat && x.LocationLat > llat && x.LocationLong < ulng && x.LocationLong > llng)) && x.OnlineStatus == true /*&& x.BloodGroup.Equals(item.BloodType)*/)).ToList();
+                (x.LocationLat < ulat && x.LocationLat > llat && x.LocationLong < ulng && x.LocationLong > llng)) && x.OnlineStatus == true && x.Activated==true/*&& x.BloodGroup.Equals(item.BloodType)*/)).ToList();
                 foreach (BepDonor donor in onlineDonorList)
                 {
                     //Send mail with get query of the event id that will display the event details on a webapp based on the response
