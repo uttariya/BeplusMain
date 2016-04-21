@@ -12,6 +12,8 @@ namespace beplusService.DataObjects
         public int MinsDur { get; set; }
         public double LocationLat { get; set; }
         public double LocationLong { get; set; }
+        public string HospitalName { get; set; }
+        public string HospitalAddress { get; set; }
         public bool Emergency { get; set; }
         public bool Honored { get; set; }
         public string BloodType { get; set; }
