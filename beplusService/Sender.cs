@@ -19,7 +19,7 @@ namespace beplusService
                 myMessage.AddTo(Email);
                 myMessage.From = new MailAddress("notifications@beplus.azure-mobile.net", "bePlus team");
                 myMessage.Subject = subject;
-                myMessage.Text = body;
+                myMessage.Html = body;
                 //var apikey = "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";
                 var transportWeb = new Web(new NetworkCredential("azure_516c1b4f721446b88e4658edda90e4e8@azure.com", "Nagin420"));
                 transportWeb.Deliver(myMessage);
