@@ -14,6 +14,8 @@ namespace beplusService.DataObjects
         public double LocationLong { get; set; }
         public bool Emergency { get; set; }
         public bool Honored { get; set; }
+        public string BloodType { get; set; }
+        public string BloodUnits { get; set; }
         public String RecipientName { get; set; }
         public String RecipientPhone { get; set; }
         public String RecipientEmail { get; set; }
