@@ -97,9 +97,10 @@ namespace beplusService.Controllers
         }
         private void funk(int time, BepBloodRequest item)
         {
+            var db = new beplusContext();
             int i = 4;
             double kms = 10;
-            while (i > 0 && donfound==false)
+            while (i > 0 && item.Honored==false)
             {
                 
                 double ulat = item.LocationLat + (kms / 110.574), llat = item.LocationLat - (kms / 110.574);
@@ -115,7 +116,6 @@ namespace beplusService.Controllers
 
                     Sender.SendMail(donor.Email, "Donor details", mail);
                 }
-
                 Thread.Sleep(time);
                 //in each loop find only the online and activated donors within the radius with location of the inserted bloodrequest object (current)
                 //send the mail to donors by checking their RecieverGroups attributes by checking if the recipients
@@ -123,6 +123,7 @@ namespace beplusService.Controllers
                 //the email should contain a get request link with
                 //bloodrequest object id (current.Id) and donorID that will call a the get API HonorBloodRequest (the function below this)
                 //with the bloodrequestId and donorID. In the email pls mention details like blood request location, recipient name, timing duration,etc
+                item = db.BepBloodRequests.Single(x => x.Id == item.Id);
                 kms = kms + 10;
                 i--;
             }
