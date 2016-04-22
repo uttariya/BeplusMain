@@ -117,6 +117,7 @@ namespace beplusService.Controllers
                         item.RecipientName + "</td></tr><tr><td>amount</td><td>" + item.BloodUnits + "</td></tr><tr><td>type</td><td>" + item.BloodType + "</td></tr><tr><td>hospital name</td><td>" + item.HospitalName + "</td></tr><tr><td>hospital address</td><td>" + item.HospitalAddress + "</td></tr></tbody></table></div><div>To accept this request please click <a href=\"http://bplusemailverify.azurewebsites.net/Webform2.aspx?Id=" + item.Id + "&donorId=" + donor.Id + "\">here</a></div></body></html>";
 
                     Sender.SendMail(donor.Email, "Donor details", mail);
+                    this.Services.Log.Info("Sent Mail To " + donor.Email);
                 }
                 Thread.Sleep(time);
                 //in each loop find only the online and activated donors within the radius with location of the inserted bloodrequest object (current)
