@@ -102,13 +102,9 @@ namespace beplusService.Controllers
             double kms = 10;
             while (i > 0)
             {
-                using (var db2 = new beplusContext())
-                {
-                    BepBloodRequest bloodRequest = db2.BepBloodRequests.SingleOrDefault(x => x.Id == item.Id);
-                    if (bloodRequest.Honored)
-                        return;
-                }
-
+                BepBloodRequest bloodRequest = Lookup(item.Id).Queryable.Single();
+                if (bloodRequest.Honored)
+                    return;
                 double ulat = item.LocationLat + (kms / 110.574), llat = item.LocationLat - (kms / 110.574);
                 double longdist = Math.Cos((Math.PI * item.LocationLat) / 180) * 111.320;
                 double ulng = item.LocationLong + (kms / longdist), llng = item.LocationLong - (kms / longdist);
