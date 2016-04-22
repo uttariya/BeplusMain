@@ -86,10 +86,10 @@ namespace beplusService.Controllers
             donor.OnlineStatus = true;
             //Provision to send out activation email. Until implemented, the activation status will be true for all registering parties
             donor.Activated = false;
-            
-            BepDonor current = await InsertAsync(donor);
             string body = "<!DOCTYPE html><html><head></head><body><div style=\"background-color:#800000;padding:20px\"><h1 style=\"color:white\">Welcome!</h1></div><p>please click <a href=\"http://bplusemailverify.azurewebsites.net/Webform1.aspx?type=1&userid="+donor.Id+"\">here</a> to register yourself successfully.</p></body></html>";
             Sender.SendMail(donor.Email, "Please Activate Your Account", body);
+            BepDonor current = await InsertAsync(donor);
+            
             return Ok("Donor registered successfully!");
         }
         [Route("api/activateDonor", Name = "ActivateDonor")]
