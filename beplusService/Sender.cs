@@ -21,7 +21,7 @@ namespace beplusService
                 myMessage.Subject = subject;
                 myMessage.Html = body;
                 //var apikey = "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";
-                var transportWeb = new Web(new NetworkCredential("azure_516c1b4f721446b88e4658edda90e4e8@azure.com", "Nagin420"));
+                var transportWeb = new Web(new NetworkCredential("azure_a9b6040e6f10e841c60a8e2b7af87e82@azure.com", "Nagin420"));
                 transportWeb.Deliver(myMessage);
             }
             catch (Exception e)
