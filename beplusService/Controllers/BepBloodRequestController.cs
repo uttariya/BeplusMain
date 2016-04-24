@@ -95,7 +95,7 @@ namespace beplusService.Controllers
         {
              return DeleteAsync(id);
         }
-        private void funk(int time, BepBloodRequest item)
+        private async void funk(int time, BepBloodRequest item)
         {
             var db = new beplusContext();
             int i = 4;
@@ -113,10 +113,10 @@ namespace beplusService.Controllers
                     //Send mail with get query of the event id that will display the event details on a webapp based on the response
                     string mail = "<!DOCTYPE html><html><head><style>table, th, td {border:1px solid black;border-collapse:collapse;}th, td {padding:5px;}</style></head><body><div style=\"border:5px solid #800000; padding:10px\"><div style=\"background-color:#800000;padding:20px\"><h1 style=\"color:white \">Welcome!</h1></div><p> dear" + " " + donor.Name + ",</p><p> a person needs blood please help him in this time of need. The details are as given below.</br>Thank you.</p><table style=\"width:100%\"><tbody><tr><td>name</td><td>" +
                         item.RecipientName + "</td></tr><tr><td>amount</td><td>" + item.BloodUnits + "</td></tr><tr><td>type</td><td>" + item.BloodType + "</td></tr><tr><td>hospital name</td><td>" + item.HospitalName + "</td></tr><tr><td>hospital address</td><td>" + item.HospitalAddress + "</td></tr></tbody></table></div><div>To accept this request please click <a href=\"http://bplusemailverify.azurewebsites.net/Webform2.aspx?Id=" + item.Id + "&donorId=" + donor.Id + "\">here</a></div></body></html>";
-
+                    await Task.Delay(time);
                     Sender.SendMail(donor.Email, "Donor details", mail);
                 }
-                Thread.Sleep(time);
+                
                 //in each loop find only the online and activated donors within the radius with location of the inserted bloodrequest object (current)
                 //send the mail to donors by checking their RecieverGroups attributes by checking if the recipients
                 //blood type matches any of donor's reciever groups
