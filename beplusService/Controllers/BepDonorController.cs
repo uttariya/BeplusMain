@@ -41,27 +41,27 @@ namespace beplusService.Controllers
         // PATCH tables/BepDonor/48D68C86-6EA6-4C25-AA33-223FC9A27959
         public Task<BepDonor> PatchBepDonor(string id, Delta<BepDonor> patch)
         {
-             return UpdateAsync(id, patch);
+            return UpdateAsync(id, patch);
         }
-        
+
         // POST tables/BepDonor
         public async Task<IHttpActionResult> PostBepDonor(BepDonor item)
         {
             BepDonor current = await InsertAsync(item);
             return CreatedAtRoute("Tables", new { id = current.Id }, current);
         }
-        
+
         // DELETE tables/BepDonor/48D68C86-6EA6-4C25-AA33-223FC9A27959
         public Task DeleteBepDonor(string id)
         {
-             return DeleteAsync(id);
+            return DeleteAsync(id);
         }
         [Route("api/registerDonor", Name = "RegisterNewDonor")]
         public async Task<IHttpActionResult> RegisterNewDonor(BepDonor donor)
         {
             // Does the donor data exist?
             var count = context.BepDonors.Where(x => (x.Phone == donor.Phone && x.OnlineStatus == true)).Count();
-            if (count >0)
+            if (count > 0)
             {
                 return BadRequest("Phone number already registered!");
             }
@@ -70,17 +70,17 @@ namespace beplusService.Controllers
             {
                 return BadRequest("Email Id already registered!");
             }
-            if(string.IsNullOrEmpty(donor.ReceiverGroups))
-                switch(donor.BloodGroup)
+            if (string.IsNullOrEmpty(donor.ReceiverGroups))
+                switch (donor.BloodGroup)
                 {
-                    case "A+": donor.ReceiverGroups = "A+,AB+"; break;
-                    case "O+": donor.ReceiverGroups = "A+,AB+,O+,B+"; break;
-                    case "B+": donor.ReceiverGroups = "B+,AB+"; break;
-                    case "AB+": donor.ReceiverGroups = "AB+"; break;
-                    case "A-": donor.ReceiverGroups = "A+,AB+,A-,AB-"; break;
-                    case "O-": donor.ReceiverGroups = "A+,AB+,O+,B+,A-,AB-,O-,B-"; break;
-                    case "B-": donor.ReceiverGroups = "B+,AB+,B-,AB-"; break;
-                    case "AB-": donor.ReceiverGroups = "AB+,AB-"; break;
+                    case "A+": donor.ReceiverGroups = ",A+,AB+"; break;
+                    case "O+": donor.ReceiverGroups = ",A+,AB+,O+,B+"; break;
+                    case "B+": donor.ReceiverGroups = ",B+,AB+"; break;
+                    case "AB+": donor.ReceiverGroups = ",AB+"; break;
+                    case "A-": donor.ReceiverGroups = ",A+,AB+,A-,AB-"; break;
+                    case "O-": donor.ReceiverGroups = ",A+,AB+,O+,B+,A-,AB-,O-,B-"; break;
+                    case "B-": donor.ReceiverGroups = ",B+,AB+,B-,AB-"; break;
+                    case "AB-": donor.ReceiverGroups = ",AB+,AB-"; break;
                 }
             donor.Subscribed = true;
             donor.OnlineStatus = true;
@@ -88,7 +88,7 @@ namespace beplusService.Controllers
             donor.Activated = false;
             
             BepDonor current = await InsertAsync(donor);
-            string body = "<!DOCTYPE html><html><head></head><body><div style=\"background-color:#800000;padding:20px\"><h1 style=\"color:white\">Welcome!</h1></div><p>please click <a href=\"http://bplusemailverify.azurewebsites.net/Webform1.aspx?type=1&userid="+donor.Id+"\">here</a> to register yourself successfully.</p></body></html>";
+            string body = "<!DOCTYPE html><html><head></head><body><div style=\"background-color:#800000;padding:20px\"><h1 style=\"color:white\">Welcome!</h1></div><p>please click <a href=\"http://bplusemailverify.azurewebsites.net/Webform1.aspx?type=1&userid=" + current.Id + "\">here</a> to register yourself successfully.</p></body></html>";
             Sender.SendMail(donor.Email, "Please Activate Your Account", body);
             return Ok("Donor registered successfully!");
         }
@@ -113,7 +113,7 @@ namespace beplusService.Controllers
                     BepDonor donor = db.BepDonors.SingleOrDefault(x => x.Id == Id);
                     donor.Activated = true;
                     db.Entry(donor).State = System.Data.Entity.EntityState.Modified;
-                    db.SaveChanges();                    
+                    db.SaveChanges();
                 }
                 return Ok("Your account has been activated! Please login using our app.");
             }
@@ -122,7 +122,7 @@ namespace beplusService.Controllers
         public async Task<IHttpActionResult> RegisterOfflineDonor(BepDonor input)
         {
             // Does the donor data exist?
-            
+
             var count = context.BepDonors.Where(x => (x.Phone == input.Phone && x.OnlineStatus == true)).Count();
             if (count > 0)
             {
@@ -172,7 +172,7 @@ namespace beplusService.Controllers
             {
                 return BadRequest("Email Id already registered!");
             }
-            if(!string.IsNullOrEmpty(donor.BloodGroup))
+            if (!string.IsNullOrEmpty(donor.BloodGroup))
                 switch (donor.BloodGroup)
                 {
                     case "A+": donor.ReceiverGroups = "A+,AB+"; break;
@@ -202,11 +202,11 @@ namespace beplusService.Controllers
         {
             // Does the donor data exist?
             List<BepDonor> donorlist;
-            if(logindata.Phone!=null)
+            if (logindata.Phone != null)
                 donorlist = context.BepDonors.Where(x => (x.Phone == logindata.Phone && x.Password == logindata.Password)).ToList();
             else donorlist = context.BepDonors.Where(x => (x.Email == logindata.Email && x.Password == logindata.Password)).ToList();
             int count = donorlist.Count;
-            if (count==1)
+            if (count == 1)
             {
                 return Ok(Mapper.Map<BepDonorDTO>(donorlist[0]));
             }
