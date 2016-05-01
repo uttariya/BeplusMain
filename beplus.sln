@@ -5,9 +5,7 @@ VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "beplusService", "beplusService\beplusService.csproj", "{209FA716-A7AD-4095-BD70-C8710FC66FA7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication1", "..\WebApplication1\WebApplication1\WebApplication1.csproj", "{DEC42242-219A-4105-9D9E-E959621F0F4E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeplusEmailHandler", "..\WebApplication1\WebApplication1\BeplusEmailHandler.csproj", "{D389ED8A-D8CC-4649-A99B-01BFA7E54CE7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication2", "WebApplication2\WebApplication2.csproj", "{35DFA60A-A2FA-4D00-BE29-854C4718E567}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,14 +17,10 @@ Global
 		{209FA716-A7AD-4095-BD70-C8710FC66FA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{209FA716-A7AD-4095-BD70-C8710FC66FA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{209FA716-A7AD-4095-BD70-C8710FC66FA7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DEC42242-219A-4105-9D9E-E959621F0F4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DEC42242-219A-4105-9D9E-E959621F0F4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DEC42242-219A-4105-9D9E-E959621F0F4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DEC42242-219A-4105-9D9E-E959621F0F4E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D389ED8A-D8CC-4649-A99B-01BFA7E54CE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D389ED8A-D8CC-4649-A99B-01BFA7E54CE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D389ED8A-D8CC-4649-A99B-01BFA7E54CE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D389ED8A-D8CC-4649-A99B-01BFA7E54CE7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35DFA60A-A2FA-4D00-BE29-854C4718E567}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35DFA60A-A2FA-4D00-BE29-854C4718E567}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35DFA60A-A2FA-4D00-BE29-854C4718E567}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35DFA60A-A2FA-4D00-BE29-854C4718E567}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
