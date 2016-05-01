@@ -58,9 +58,7 @@ namespace WebApplication1
             }
             else if ((x.ToString()).Equals("2"))
             {
-                //dssdfsdfs
-                //Fixed the bug "Resource Not Found" during email verification of organization/community
-                WebRequest request = WebRequest.Create(new Uri("http://beplus.azure-mobile.net/api/activateOrganization?Id=" + g.ToString()));
+                WebRequest request = WebRequest.Create(new Uri("http://beplus.azure-mobile.net/api/activateOrganisation?Id=" + g.ToString()));
                 String encoded = System.Convert.ToBase64String(Encoding.ASCII.GetBytes("" + ":" + pass));
                 request.Credentials = CredentialCache.DefaultCredentials;
                 request.Method = "GET";
