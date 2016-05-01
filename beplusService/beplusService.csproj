@@ -45,7 +45,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>False</UseIIS>
+          <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>59742</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
@@ -230,8 +230,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ClassDiagram1.cd" />
-    <None Include="Properties\PublishProfiles\beplus - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\mobile-beplus.pubxml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
