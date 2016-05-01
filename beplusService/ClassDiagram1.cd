@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="beplusService.WebApiConfig" Collapsed="true">
+    <Position X="4" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>App_Start\WebApiConfig.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="beplusService.beplusInitializer" Collapsed="true">
+    <Position X="7.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>App_Start\WebApiConfig.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="beplusService.WebApiApplication" Collapsed="true">
+    <Position X="2.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Global.asax.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="beplusService.SampleJob">
+    <Position X="7.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEA=</HashCode>
+      <FileName>ScheduledJobs\SampleJob.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="beplusService.Sender" Collapsed="true">
+    <Position X="0.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Sender.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="beplusService.Controllers.BepBloodRequestController" Collapsed="true">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACGAABAAAAQQACAAAEAAAAAAAAAQAAAAAAAAAAAAQ=</HashCode>
+      <FileName>Controllers\BepBloodRequestController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="beplusService.Controllers.BepDonorController" Collapsed="true">
+    <Position X="5.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIiGAAAAAAAIAQAACAEAAABAAAAAAAAAAAEACAAAAAA=</HashCode>
+      <FileName>Controllers\BepDonorController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="beplusService.Controllers.BepEventController" Collapsed="true">
+    <Position X="2.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAagAAABAAAAQAAAAAAAAAAAAAAAAAAAIAAAAgABAA=</HashCode>
+      <FileName>Controllers\BepEventController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="beplusService.Controllers.BepOrganizationController" Collapsed="true">
+    <Position X="2.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQDAAACAAAAAQAABAAAAAAAACAAAAUAAAQAAAAAAAA=</HashCode>
+      <FileName>Controllers\BepOrganizationController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="beplusService.DataObjects.BepBloodRequest" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAAACAiBBABABAQABAIAECAAAEAAIBEQAAEAA=</HashCode>
+      <FileName>DataObjects\BepBloodRequest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="beplusService.DataObjects.BepDonor" Collapsed="true">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAACAAEABABACACAwQQAAEAAAGAAAAIQABAAA=</HashCode>
+      <FileName>DataObjects\BepDonor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="beplusService.DataObjects.BepDonorDTO" Collapsed="true">
+    <Position X="7.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAACAAgEACAAAABABACACAwQQAAEABBEAAAAIQCBAAA=</HashCode>
+      <FileName>DataObjects\BepDonorDTO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="beplusService.DataObjects.BepEvent" Collapsed="true">
+    <Position X="0.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAEAEAAAAAAAAAAAAEAAABAAAAAAAAAAA=</HashCode>
+      <FileName>DataObjects\BepEvent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="beplusService.DataObjects.BepEventDTO" Collapsed="true">
+    <Position X="4" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgEAIAAAAEAAAAAAAAAAAAEABBBAAAAAACAAAA=</HashCode>
+      <FileName>DataObjects\BepEventDTO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="beplusService.DataObjects.BepOrganization" Collapsed="true">
+    <Position X="0.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BEAAAAAAACAAAAFAAAAACAQAgAAAAAAGAAAQIAAAAAA=</HashCode>
+      <FileName>DataObjects\BepOrganization.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="beplusService.DataObjects.BepOrganizationDTO" Collapsed="true">
+    <Position X="4" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BEACAAAAACAAAAFAAAAACAQAgAAAAAAEAAAQIAAAAAA=</HashCode>
+      <FileName>DataObjects\BepOrganizationDTO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="beplusService.DataObjects.LoginData">
+    <Position X="5.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAAAAAAACAAAAIAAAAAA=</HashCode>
+      <FileName>DataObjects\LoginData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="beplusService.Models.beplusContext" Collapsed="true">
+    <Position X="5.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIACAAAAAgAABAAAgAEAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\beplusContext.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
