@@ -5,7 +5,7 @@ VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "beplusService", "beplusService\beplusService.csproj", "{209FA716-A7AD-4095-BD70-C8710FC66FA7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "beplusEmailHandler", "WebApplication2\beplusEmailHandler.csproj", "{35DFA60A-A2FA-4D00-BE29-854C4718E567}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "beplusEmailHandler", "beplusEmailHandler\beplusEmailHandler.csproj", "{35DFA60A-A2FA-4D00-BE29-854C4718E567}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
