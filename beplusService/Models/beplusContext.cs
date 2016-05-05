@@ -24,7 +24,7 @@ namespace beplusService.Models
         public beplusContext() : base(connectionStringName)
         {
 
-        } 
+        }
 
         //public DbSet<BepDonor> Donors { get; set; }
         //public DbSet<BepOrganization> Organizations { get; set; }
@@ -40,7 +40,7 @@ namespace beplusService.Models
                 new AttributeToColumnAnnotationConvention<TableColumnAttribute, string>(
                     "ServiceTableColumn", (property, attributes) => attributes.Single().ColumnType.ToString()));
         }
-        
+
         public System.Data.Entity.DbSet<beplusService.DataObjects.BepOrganization> BepOrganizations { get; set; }
 
         public System.Data.Entity.DbSet<beplusService.DataObjects.BepDonor> BepDonors { get; set; }

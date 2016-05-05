@@ -55,17 +55,42 @@ namespace beplusService.Controllers
                 return BadRequest("Email already registered a request,please wait!");
             }
             BepBloodRequest current = await InsertAsync(item);
-            int time;
-            //TODO Check if emergency or non emergency, write code to increase the radius accordingly as per given time using jobs/threads
-            if (item.Emergency == true)
-                time = 360000;
-            else
-                time = 7200000;
-            //creating a new thread for sending out the requests
-            Thread th = new Thread(() => funk(time, current));
-            th.Start();
+            string body = "<!DOCTYPE html><html><head></head><body><div style=\"background-color:#800000;padding:20px\"><h1 style=\"color:white\">Welcome!</h1></div><p>please click <a href=\"http://bplusemailverify.azurewebsites.net/Webform1.aspx?type=3&userid=" + current.Id + "\">here</a> to verify your request.</p></body></html>";
+            Sender.SendMail(current.RecipientEmail, "verify blood request", body);
             //creating the new bloodrequest object and returning updated info
             return CreatedAtRoute("Tables", new { id = current.Id }, current);
+        }
+        [Route("api/VerifyBloodRequest", Name = "VerifyBloodRequest")]
+        [HttpGet]
+        public async Task<IHttpActionResult> VerifyBloodRequest(string Id)
+        {
+            var count = context.BepBloodRequests.Where(x => (x.Id == Id && x.Verified == false)).Count();
+            if (count == 0)
+            {
+                return BadRequest("bad request or request already verified");
+            }
+            else
+            {
+                BepBloodRequest donor;
+                using (var db = new beplusContext())
+                {
+                    donor = db.BepBloodRequests.SingleOrDefault(x => x.Id == Id);
+                    donor.Verified = true;
+                    db.Entry(donor).State = System.Data.Entity.EntityState.Modified;
+                    db.SaveChanges();
+                }
+                int time;
+                //TODO Check if emergency or non emergency, write code to increase the radius accordingly as per given time using jobs/threads
+                if (donor.Emergency == true)
+                    time = 360000;
+                else
+                    time = 7200000;
+                //creating a new thread for sending out the requests
+                Thread th = new Thread(() => funk(time, donor));
+                th.Start();
+                return Ok("Your request has been verified!");
+
+            }
         }
         [Route("api/honorBloodRequest", Name = "HonorBloodRequest")]
         [HttpGet]
@@ -76,7 +101,7 @@ namespace beplusService.Controllers
             if (count == 1)
             {
                 //Display message that another donor has already accepted the blood request
-                return BadRequest("Sorry request honored.");
+                return BadRequest("Sorry request all ready honored.");
             }
             else
             {
@@ -94,7 +119,7 @@ namespace beplusService.Controllers
                     db.Entry(bloodRequest).State = System.Data.Entity.EntityState.Modified;
                     db.SaveChanges();
                     //Send the mail to the bloodRequest.recipientEmail saying the request was honored with name and location of the donor
-                    string msg = "<!DOCTYPE html><html><head></head><body><p>dear  " + bloodRequest.RecipientName + " ,</br>your request has been accepted.the donor name is " + donor.Name + ".please click <a href=\"http://maps.google.com/maps?q="+donor.LocationLat+","+donor.LocationLong+"\">here</a> to view donors current location</br>Thank you.</p></body></html>";
+                    string msg = "<!DOCTYPE html><html><head></head><body><p>dear  " + bloodRequest.RecipientName + " ,</br>your request has been accepted.the donor name is " + donor.Name + ".please click <a href=\"http://maps.google.com/maps?daddr=" + donor.LocationLat+","+donor.LocationLong+ "&amp;ll=\">here</a> to view donors current location</br>Thank you.</p></body></html>";
                     Sender.SendMail(bloodRequest.RecipientEmail, "Donor found!", msg);
                 }
                 //confirming the donor that his request has been accepted
@@ -138,8 +163,8 @@ namespace beplusService.Controllers
                      sentlist.Add(donor);
                     //Send mail with get query of the event id that will display the event details on a webapp based on the response
                     string mail = "<!DOCTYPE html><html><head><style>table, th, td {border:1px solid black;border-collapse:collapse;}th, td {padding:5px;}</style></head><body><div style=\"border:5px solid #800000; padding:10px\"><div style=\"background-color:#800000;padding:20px\"><h1 style=\"color:white \">Welcome!</h1></div><p> dear" + " " + donor.Name + ",</p><p> a person needs blood please help him in this time of need. The details are as given below.</br>Thank you.</p><table style=\"width:100%\"><tbody><tr><td>name</td><td>" +
-                        item.RecipientName + "</td></tr><tr><td>amount</td><td>" + item.BloodUnits + "</td></tr><tr><td>type</td><td>" + item.BloodType + "</td></tr><tr><td>hospital name</td><td>" + item.HospitalName + "</td></tr><tr><td>hospital address</td><td>" + item.HospitalAddress + "</td></tr></tbody></table></div><div>To accept this request please click <a href=\"http://bplusemailverify.azurewebsites.net/Webform2.aspx?Id=" + item.Id + "&donorId=" + donor.Id + "\">here.</a></br>please click <a href=\"http://maps.google.com/maps?q=" + item.LocationLat + "," + item.LocationLong + "\">here</a> to view recipients current location</div></body></html>";
-                    if(donor.Email!=item.RecipientEmail || donor.Phone!=item.RecipientPhone)
+                        item.RecipientName + "</td></tr><tr><td>amount</td><td>" + item.BloodUnits + "</td></tr><tr><td>type</td><td>" + item.BloodType + "</td></tr><tr><td>hospital name</td><td>" + item.HospitalName + "</td></tr><tr><td>hospital address</td><td>" + item.HospitalAddress + "</td></tr></tbody></table></div><div>To accept this request please click <a href=\"http://bplusemailverify.azurewebsites.net/Webform2.aspx?Id=" + item.Id + "&donorId=" + donor.Id + "\">here.</a></br>please click <a href=\"http://maps.google.com/maps?daddr=" + item.LocationLat + "," + item.LocationLong + "&amp;ll=\">here</a> to view recipients current location</div></body></html>";
+                    if(donor.Email!=item.RecipientEmail && donor.Phone!=item.RecipientPhone)
                     Sender.SendMail(donor.Email, "Donor details", mail);
                 }
                 //sleep based on time got from sender

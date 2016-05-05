@@ -15,6 +15,7 @@ namespace beplusService.DataObjects
         public string HospitalName { get; set; }
         public string HospitalAddress { get; set; }
         public bool Emergency { get; set; }
+        public bool Verified { get; set; }
         public bool Honored { get; set; }
         public string BloodType { get; set; }
         public string BloodUnits { get; set; }

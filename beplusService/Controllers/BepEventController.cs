@@ -59,6 +59,7 @@ namespace beplusService.Controllers
         public async Task<IHttpActionResult> CreateEvent(BepEventDTO bepEventDTO)
         {
             BepOrganization organization = context.BepOrganizations.SingleOrDefault(x => x.Id == bepEventDTO.OrgId);
+
             List<BepDonor> offlineDonorList = context.BepDonors.Where(x => (x.OrgId == organization.Id
                                                                         && x.OnlineStatus == false)).ToList();
             double kms = 5;
@@ -71,7 +72,7 @@ namespace beplusService.Controllers
 
             List<BepDonor> donorList = offlineDonorList;
             donorList.AddRange(onlineDonorList);
-            //COMPLETE THIS CODE
+            
             //Send Mail to offline donor with event details
             foreach (BepDonor donor in donorList)
             {

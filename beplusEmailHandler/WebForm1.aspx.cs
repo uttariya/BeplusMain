@@ -94,6 +94,44 @@ namespace WebApplication1
 
                 
             }
+            else if ((x.ToString()).Equals("3"))
+            {
+                //Bug fix for "Error: 500 No Resource Found" during Organization/Community Registration
+                WebRequest request = WebRequest.Create(new Uri("http://beplus.azure-mobile.net/api/VerifyBloodRequest?Id=" + g.ToString()));
+                String encoded = System.Convert.ToBase64String(Encoding.ASCII.GetBytes("" + ":" + pass));
+                request.Credentials = CredentialCache.DefaultCredentials;
+                request.Method = "GET";
+                request.Headers.Add("Authorization", "Basic " + encoded);
+                request.PreAuthenticate = true;
+                responsetxt = "";
+                try
+                {
+                    HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                    var encoding = Encoding.GetEncoding(response.CharacterSet);
+                    using (var responseStream = response.GetResponseStream())
+                    using (var reader = new StreamReader(responseStream, encoding))
+                        responsetxt = reader.ReadToEnd();
+                    Label1.Text = responsetxt;
+                }
+                catch (WebException b)
+                {
+                    using (WebResponse response = b.Response)
+                    {
+                        HttpWebResponse httpResponse = (HttpWebResponse)response;
+
+                        using (Stream data = response.GetResponseStream())
+                        using (var reader = new StreamReader(data))
+                        {
+                            responsetxt = reader.ReadToEnd();
+
+                        }
+                    }
+                    var results = JsonConvert.DeserializeObject<dynamic>(responsetxt);
+                    Label1.Text = results.message;
+                }
+
+
+            }
             else
                 Label1.Text ="malformed URL";
         }
