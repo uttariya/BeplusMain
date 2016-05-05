@@ -58,7 +58,8 @@ namespace WebApplication1
             }
             else if ((x.ToString()).Equals("2"))
             {
-                WebRequest request = WebRequest.Create(new Uri("http://beplus.azure-mobile.net/api/activateOrganisation?Id=" + g.ToString()));
+                //Fixed "Error 500: No resource found" during organization registration.
+                WebRequest request = WebRequest.Create(new Uri("http://beplus.azure-mobile.net/api/activateOrganization?Id=" + g.ToString()));
                 String encoded = System.Convert.ToBase64String(Encoding.ASCII.GetBytes("" + ":" + pass));
                 request.Credentials = CredentialCache.DefaultCredentials;
                 request.Method = "GET";
