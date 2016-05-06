@@ -1,6 +1,6 @@
 ﻿using Microsoft.WindowsAzure.Mobile.Service;
 using System.ComponentModel.DataAnnotations;
-
+//Tirthanu Ghosh
 namespace beplusService.DataObjects
 {
     public class BepOrganization:EntityData

@@ -8,7 +8,7 @@ using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-
+//uttariya bandhu
 namespace WebApplication1
 {
     public partial class WebForm2 : System.Web.UI.Page
@@ -17,7 +17,7 @@ namespace WebApplication1
         {
             var g = Request.QueryString["Id"];
             var x = Request.QueryString["donorId"];
-            string pass = "MTSpEOSVNXNxGyoVoeZMqnnIIGBqmk93";
+            string pass = key.pass;
             string responsetxt;
             {
                 WebRequest request = WebRequest.Create(new Uri("http://beplus.azure-mobile.net/api/honorBloodRequest?Id=" + g.ToString()+"&donorId="+x.ToString()));

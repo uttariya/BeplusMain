@@ -1,7 +1,7 @@
 ﻿using Microsoft.WindowsAzure.Mobile.Service;
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
-
+//Tirthanu Ghosh
 namespace beplusService.DataObjects
 {
     public class BepEvent:EntityData

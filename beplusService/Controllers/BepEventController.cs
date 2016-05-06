@@ -9,7 +9,7 @@ using beplusService.Models;
 using System.Collections.Generic;
 using System.Device.Location;
 using System;
-
+//uttariya bandhu,Tirthanu Ghosh
 namespace beplusService.Controllers
 {
     public class BepEventController : TableController<BepEvent>
@@ -54,7 +54,7 @@ namespace beplusService.Controllers
         {
             return DeleteAsync(id);
         }
-
+        //uttariya bandhu
         [Route("api/createEvent", Name = "CreateEvent")]
         public async Task<IHttpActionResult> CreateEvent(BepEventDTO bepEventDTO)
         {   //date check working

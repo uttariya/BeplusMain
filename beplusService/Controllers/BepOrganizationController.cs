@@ -8,7 +8,7 @@ using beplusService.DataObjects;
 using beplusService.Models;
 using System.Collections.Generic;
 using AutoMapper;
-
+//uttariya bandhu,Tirthanu Ghosh
 namespace beplusService.Controllers
 {
     public class BepOrganizationController : TableController<BepOrganization>
@@ -58,6 +58,7 @@ namespace beplusService.Controllers
         {
             return DeleteAsync(id);
         }
+        //tirthanu ghosh
         [Route("api/registerOrganization", Name = "RegisterNewOrganization")]
         public async Task<IHttpActionResult> RegisterNewOrganization(BepOrganization organization)
         {
@@ -80,6 +81,7 @@ namespace beplusService.Controllers
             Sender.SendMail(current.Email, "Please Activate Your Account", body);
             return Ok("Organization registered successfully!");
         }
+        //uttariya bandhu
         [Route("api/activateOrganization", Name = "ActivateOrganization")]
         [HttpGet]
         public async Task<IHttpActionResult> ActivateOrganization(string Id)
@@ -106,6 +108,7 @@ namespace beplusService.Controllers
                 return Ok("Your account has been activated! Please login using our app.");
             }
         }
+        //tirthanu ghosh
         [Route("api/loginOrganization", Name = "LoginOrganization")]
         public IHttpActionResult LoginOrganization(LoginData logindata)
         {

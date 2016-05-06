@@ -9,7 +9,7 @@ using System.Web;
 using System.Web.Script.Serialization;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-
+//uttariya bandhu
 namespace WebApplication1
 {
     public partial class WebForm1 : System.Web.UI.Page
@@ -18,7 +18,7 @@ namespace WebApplication1
         {
             var g = Request.QueryString["userid"];
             var x = Request.QueryString["type"];
-            string pass = "MTSpEOSVNXNxGyoVoeZMqnnIIGBqmk93";
+            string pass = key.pass;
             string responsetxt;
             if ((x.ToString()).Equals("1"))
             {

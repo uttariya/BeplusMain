@@ -9,7 +9,7 @@ using beplusService.Models;
 using System;
 using System.Threading;
 using System.Collections.Generic;
-
+//uttariya bandhu,Tirthanu Ghosh
 namespace beplusService.Controllers
 {
     public class BepBloodRequestController : TableController<BepBloodRequest>
@@ -60,6 +60,7 @@ namespace beplusService.Controllers
             //creating the new bloodrequest object and returning updated info
             return CreatedAtRoute("Tables", new { id = current.Id }, current);
         }
+        //uttariya bandhu
         [Route("api/VerifyBloodRequest", Name = "VerifyBloodRequest")]
         [HttpGet]
         public async Task<IHttpActionResult> VerifyBloodRequest(string Id)
@@ -92,6 +93,7 @@ namespace beplusService.Controllers
 
             }
         }
+        //uttariya bandhu
         [Route("api/honorBloodRequest", Name = "HonorBloodRequest")]
         [HttpGet]
         public async Task<IHttpActionResult> HonorBloodRequest(string Id, string donorId)
@@ -135,6 +137,7 @@ namespace beplusService.Controllers
         {//delete requests,use only for debugging
             return DeleteAsync(id);
         }
+        //uttariya bandhu
         private void funk(int time, BepBloodRequest item)
         {
             int i = 4;

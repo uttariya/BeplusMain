@@ -8,7 +8,7 @@ using beplusService.DataObjects;
 using beplusService.Models;
 using System.Collections.Generic;
 using AutoMapper;
-
+//uttariya bandhu,Tirthanu Ghosh
 namespace beplusService.Controllers
 {
     public class BepDonorController : TableController<BepDonor>
@@ -56,6 +56,7 @@ namespace beplusService.Controllers
         {
             return DeleteAsync(id);
         }
+        //uttariya bandhu,Tirthanu Ghosh
         [Route("api/registerDonor", Name = "RegisterNewDonor")]
         public async Task<IHttpActionResult> RegisterNewDonor(BepDonor donor)
         {
@@ -92,6 +93,7 @@ namespace beplusService.Controllers
             Sender.SendMail(donor.Email, "Please Activate Your Account", body);
             return Ok("Donor registered successfully! please check your email to activate");
         }
+        //uttariya bandhu,Tirthanu Ghosh
         [Route("api/activateDonor", Name = "ActivateDonor")]
         [HttpGet]
         public async Task<IHttpActionResult> ActivateDonor(string Id)
@@ -118,6 +120,7 @@ namespace beplusService.Controllers
                 return Ok("Your account has been activated! Please login using our app.");
             }
         }
+        //uttariya bandhu,Tirthanu Ghosh
         [Route("api/registerOfflineDonor", Name = "RegisterOfflineDonor")]
         public async Task<IHttpActionResult> RegisterOfflineDonor(BepDonor input)
         {
@@ -158,6 +161,7 @@ namespace beplusService.Controllers
             else
                 return BadRequest("Email or Phone not registered!");
         }
+        //uttariya bandhu,Tirthanu Ghosh
         [Route("api/importDonorData", Name = "ImportDonorData")]
         public async Task<IHttpActionResult> ImportDonorData(BepDonor donor)
         {
@@ -193,11 +197,12 @@ namespace beplusService.Controllers
             BepOrganization org = context.BepOrganizations.Single(x => x.Id == current.OrgId);
             //Send Mail to offline donor with link to download the application
 
-            Sender.SendMail(donor.Email, "please download our APP", "<!DOCTYPE html><html><head></head><body><p>dear "+donor.Name+",</br>you have been invited to register to our application by "+org.Name+" from "+org.Locality+ ".</br>please download our app and register yourself.Join us and increase our network of blood donors.</br>thank you</p><p>click as per ypur device</br><ul><li><a href=\"#\">windows phone</a></li><li><a href=\"#\">windows pc</a></li><li><a href=\"#\">android</a></li><li><a href=\"#\">ios</a></li></ul></p></body></html>");
+            Sender.SendMail(donor.Email, "please download our APP", "<!DOCTYPE html><html><head></head><body><p>dear "+donor.Name+",</br>you have been invited to register to our application by "+org.Name+" from "+org.Locality+ ".</br>please download our app and register yourself.Join us and increase our network of blood donors.</br>thank you</p><p>click as per your device</br><ul><li><a href=\"#\">windows phone</a></li><li><a href=\"#\">windows pc</a></li><li><a href=\"#\">android</a></li><li><a href=\"#\">ios</a></li></ul></p></body></html>");
             //End send mail code
             return Ok("Offline Donor registered successfully!");
         }
         [Route("api/loginDonor", Name = "LoginDonor")]
+        //tirthanu ghosh
         public IHttpActionResult LoginDonor(LoginData logindata)
         {
             // Does the donor data exist?
