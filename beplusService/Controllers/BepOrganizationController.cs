@@ -77,7 +77,7 @@ namespace beplusService.Controllers
 
             BepOrganization current = await InsertAsync(organization);
             string body = "<!DOCTYPE html><html><head></head><body><div style=\"background-color:#800000;padding:20px\"><h1 style=\"color:white \">Welcome!</h1></div><p>please click <a title=\"here\" href=\"http://bplusemailverify.azurewebsites.net/Webform1.aspx?type=2&userid=" + current.Id + "\" target=\"_blank\">here</a>to register yourself successfully.</p></body></html>";
-            Sender.SendMail(current.Email, "plPlease Activate Your Account", body);
+            Sender.SendMail(current.Email, "Please Activate Your Account", body);
             return Ok("Organization registered successfully!");
         }
         [Route("api/activateOrganization", Name = "ActivateOrganization")]

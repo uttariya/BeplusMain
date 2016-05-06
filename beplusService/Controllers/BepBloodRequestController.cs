@@ -88,7 +88,7 @@ namespace beplusService.Controllers
                 //creating a new thread for sending out the requests
                 Thread th = new Thread(() => funk(time, donor));
                 th.Start();
-                return Ok("Your request has been verified!");
+                return Ok("Your have been verified and your request has been initiated");
 
             }
         }
@@ -121,9 +121,12 @@ namespace beplusService.Controllers
                     //Send the mail to the bloodRequest.recipientEmail saying the request was honored with name and location of the donor
                     string msg = "<!DOCTYPE html><html><head></head><body><p>dear  " + bloodRequest.RecipientName + " ,</br>your request has been accepted.the donor name is " + donor.Name + ".please click <a href=\"http://maps.google.com/maps?daddr=" + donor.LocationLat+","+donor.LocationLong+ "&amp;ll=\">here</a> to view donors current location</br>Thank you.</p></body></html>";
                     Sender.SendMail(bloodRequest.RecipientEmail, "Donor found!", msg);
+                    string mail = "<!DOCTYPE html><html><head><style>table, th, td {border:1px solid black;border-collapse:collapse;}th, td {padding:5px;}</style></head><body><div style=\"border:5px solid #800000; padding:10px\"><div style=\"background-color:#800000;padding:20px\"><h1 style=\"color:white \">Welcome!</h1></div><p> dear" + " " + donor.Name + ",</p><p> a person needs blood please help him in this time of need. The details are as given below.</br>Thank you.</p><table style=\"width:100%\"><tbody><tr><td>name</td><td>" +
+                        bloodRequest.RecipientName + "</td></tr><tr><td>amount</td><td>" + bloodRequest.BloodUnits + "</td></tr><tr><td>type</td><td>" + bloodRequest.BloodType + "</td></tr><tr><td>hospital name</td><td>" + bloodRequest.HospitalName + "</td></tr><tr><td>hospital address</td><td>" + bloodRequest.HospitalAddress + "</td></tr></tbody></table></div><div></a></br>please click <a href=\"http://maps.google.com/maps?daddr=" + bloodRequest.LocationLat + "," + bloodRequest.LocationLong + "&amp;ll=\">here</a> to view and navigate to recipients current location</div></body></html>";
+                    Sender.SendMail(bloodRequest.DonorEmail, "Donor info", mail);
                 }
                 //confirming the donor that his request has been accepted
-                return Ok("Thank you for honoring blood request.");
+                return Ok("Thank you for honoring blood request.please see the email.");
             }
         }
 
@@ -180,7 +183,7 @@ namespace beplusService.Controllers
                 
             }
             item.Honored = true;
-            string end_mail = "<!DOCTYPE html><html><head><head><body><h1>HaHaHa!!! die bit**!!</h1></body></html>";
+            string end_mail = "<!DOCTYPE html><html><head><head><body><h1>sorry no donor found.</h1></body></html>";
             Sender.SendMail(item.RecipientEmail, "sorry donor not found", end_mail);
         }
     }

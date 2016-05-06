@@ -57,9 +57,23 @@ namespace beplusService.Controllers
 
         [Route("api/createEvent", Name = "CreateEvent")]
         public async Task<IHttpActionResult> CreateEvent(BepEventDTO bepEventDTO)
-        {
+        {   //date check working
+            DateTime date = (DateTime.Today.AddMinutes(330)).Date;
+            var c = ((bepEventDTO.Date).Date).CompareTo(date);
+            if (c == -1)
+                return BadRequest("please give valid dates given date is earlier than todays date");
+            //ends here
+            //check singular event or not
+            
+                var count = context.BepEvents.Where(x => (x.OrgId == bepEventDTO.OrgId)) ;
+                foreach(BepEvent a in count)
+                {
+                    if ((a.Date).Date.Equals((bepEventDTO.Date).Date))
+                        return BadRequest(" An event posted by you is already scheduled on  the given date");
+                }
+            
+            //
             BepOrganization organization = context.BepOrganizations.SingleOrDefault(x => x.Id == bepEventDTO.OrgId);
-
             List<BepDonor> offlineDonorList = context.BepDonors.Where(x => (x.OrgId == organization.Id
                                                                         && x.OnlineStatus == false)).ToList();
             double kms = 5;

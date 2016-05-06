@@ -68,7 +68,7 @@ namespace beplusService.Controllers
             count = context.BepDonors.Where(x => (x.Email == donor.Email && x.OnlineStatus == true)).Count();
             if (count > 0)
             {
-                return BadRequest("Email Id already registered!");
+                return BadRequest("Email already registered!");
             }
             if (string.IsNullOrEmpty(donor.ReceiverGroups))
                 switch (donor.BloodGroup)
@@ -90,7 +90,7 @@ namespace beplusService.Controllers
             BepDonor current = await InsertAsync(donor);
             string body = "<!DOCTYPE html><html><head></head><body><div style=\"background-color:#800000;padding:20px\"><h1 style=\"color:white\">Welcome!</h1></div><p>please click <a href=\"http://bplusemailverify.azurewebsites.net/Webform1.aspx?type=1&userid=" + current.Id + "\">here</a> to register yourself successfully.</p></body></html>";
             Sender.SendMail(donor.Email, "Please Activate Your Account", body);
-            return Ok("Donor registered successfully!");
+            return Ok("Donor registered successfully! please check your email to activate");
         }
         [Route("api/activateDonor", Name = "ActivateDonor")]
         [HttpGet]
@@ -175,14 +175,14 @@ namespace beplusService.Controllers
             if (!string.IsNullOrEmpty(donor.BloodGroup))
                 switch (donor.BloodGroup)
                 {
-                    case "A+": donor.ReceiverGroups = "A+,AB+"; break;
-                    case "O+": donor.ReceiverGroups = "A+,AB+,O+,B+"; break;
-                    case "B+": donor.ReceiverGroups = "B+,AB+"; break;
-                    case "AB+": donor.ReceiverGroups = "AB+"; break;
-                    case "A-": donor.ReceiverGroups = "A+,AB+,A-,AB-"; break;
-                    case "O-": donor.ReceiverGroups = "A+,AB+,O+,B+,A-,AB-,O-,B-"; break;
-                    case "B-": donor.ReceiverGroups = "B+,AB+,B-,AB-"; break;
-                    case "AB-": donor.ReceiverGroups = "AB+,AB-"; break;
+                    case "A+": donor.ReceiverGroups = ",A+,AB+"; break;
+                    case "O+": donor.ReceiverGroups = ",A+,AB+,O+,B+"; break;
+                    case "B+": donor.ReceiverGroups = ",B+,AB+"; break;
+                    case "AB+": donor.ReceiverGroups = ",AB+"; break;
+                    case "A-": donor.ReceiverGroups = ",A+,AB+,A-,AB-"; break;
+                    case "O-": donor.ReceiverGroups = ",A+,AB+,O+,B+,A-,AB-,O-,B-"; break;
+                    case "B-": donor.ReceiverGroups = ",B+,AB+,B-,AB-"; break;
+                    case "AB-": donor.ReceiverGroups = ",AB+,AB-"; break;
                 }
             donor.Subscribed = true;
             donor.EmergencyAvailability = false;
@@ -190,10 +190,10 @@ namespace beplusService.Controllers
             donor.Activated = false;
 
             BepDonor current = await InsertAsync(donor);
-
+            BepOrganization org = context.BepOrganizations.Single(x => x.Id == current.OrgId);
             //Send Mail to offline donor with link to download the application
 
-            Sender.SendMail(donor.Email, "please download our APP", "<!DOCTYPE html><html><head></head><body><p>app link</p></body></html>");
+            Sender.SendMail(donor.Email, "please download our APP", "<!DOCTYPE html><html><head></head><body><p>dear "+donor.Name+",</br>you have been invited to register to our application by "+org.Name+" from "+org.Locality+ ".</br>please download our app and register yourself.Join us and increase our network of blood donors.</br>thank you</p><p>click as per ypur device</br><ul><li><a href=\"#\">windows phone</a></li><li><a href=\"#\">windows pc</a></li><li><a href=\"#\">android</a></li><li><a href=\"#\">ios</a></li></ul></p></body></html>");
             //End send mail code
             return Ok("Offline Donor registered successfully!");
         }
