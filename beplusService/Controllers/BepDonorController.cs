@@ -8,7 +8,7 @@ using beplusService.DataObjects;
 using beplusService.Models;
 using System.Collections.Generic;
 using AutoMapper;
-//uttariya bandhu,Tirthanu Ghosh
+//author-uttariya bandhu,Tirthanu Ghosh
 namespace beplusService.Controllers
 {
     public class BepDonorController : TableController<BepDonor>
@@ -56,7 +56,7 @@ namespace beplusService.Controllers
         {
             return DeleteAsync(id);
         }
-        //uttariya bandhu,Tirthanu Ghosh
+        //author-uttariya bandhu,Tirthanu Ghosh
         [Route("api/registerDonor", Name = "RegisterNewDonor")]
         public async Task<IHttpActionResult> RegisterNewDonor(BepDonor donor)
         {
@@ -93,7 +93,7 @@ namespace beplusService.Controllers
             Sender.SendMail(donor.Email, "Please Activate Your Account", body);
             return Ok("Donor registered successfully! please check your email to activate");
         }
-        //uttariya bandhu,Tirthanu Ghosh
+        //author-uttariya bandhu,Tirthanu Ghosh
         [Route("api/activateDonor", Name = "ActivateDonor")]
         [HttpGet]
         public async Task<IHttpActionResult> ActivateDonor(string Id)
@@ -120,7 +120,7 @@ namespace beplusService.Controllers
                 return Ok("Your account has been activated! Please login using our app.");
             }
         }
-        //uttariya bandhu,Tirthanu Ghosh
+        //author-uttariya bandhu,Tirthanu Ghosh
         [Route("api/registerOfflineDonor", Name = "RegisterOfflineDonor")]
         public async Task<IHttpActionResult> RegisterOfflineDonor(BepDonor input)
         {
@@ -161,7 +161,7 @@ namespace beplusService.Controllers
             else
                 return BadRequest("Email or Phone not registered!");
         }
-        //uttariya bandhu,Tirthanu Ghosh
+        //author-uttariya bandhu,Tirthanu Ghosh
         [Route("api/importDonorData", Name = "ImportDonorData")]
         public async Task<IHttpActionResult> ImportDonorData(BepDonor donor)
         {
@@ -202,7 +202,7 @@ namespace beplusService.Controllers
             return Ok("Offline Donor registered successfully!");
         }
         [Route("api/loginDonor", Name = "LoginDonor")]
-        //tirthanu ghosh
+        //author-tirthanu ghosh
         public IHttpActionResult LoginDonor(LoginData logindata)
         {
             // Does the donor data exist?

@@ -8,7 +8,7 @@ using beplusService.DataObjects;
 using beplusService.Models;
 using System.Collections.Generic;
 using AutoMapper;
-//uttariya bandhu,Tirthanu Ghosh
+//author-uttariya bandhu,Tirthanu Ghosh
 namespace beplusService.Controllers
 {
     public class BepOrganizationController : TableController<BepOrganization>
@@ -73,19 +73,18 @@ namespace beplusService.Controllers
             {
                 return BadRequest("Email Id already registered!");
             }
-            //Provision to send out activation email. Until implemented, the activation status will be true for all registering parties
-            
-
+            //Provision to send out activation email.            
+            //a link to an webapp is sent which activates the organization
             BepOrganization current = await InsertAsync(organization);
             string body = "<!DOCTYPE html><html><head></head><body><div style=\"background-color:#800000;padding:20px\"><h1 style=\"color:white \">Welcome!</h1></div><p>please click <a title=\"here\" href=\"http://bplusemailverify.azurewebsites.net/Webform1.aspx?type=2&userid=" + current.Id + "\" target=\"_blank\">here</a>to register yourself successfully.</p></body></html>";
             Sender.SendMail(current.Email, "Please Activate Your Account", body);
             return Ok("Organization registered successfully!");
         }
-        //uttariya bandhu
+        //author-uttariya bandhu
         [Route("api/activateOrganization", Name = "ActivateOrganization")]
         [HttpGet]
         public async Task<IHttpActionResult> ActivateOrganization(string Id)
-        {
+        {//is the org activated?
             var count = context.BepOrganizations.Where(x => (x.Id == Id && x.Activated == true)).Count();
             if (count == 1)
             {
@@ -108,7 +107,7 @@ namespace beplusService.Controllers
                 return Ok("Your account has been activated! Please login using our app.");
             }
         }
-        //tirthanu ghosh
+        //author-tirthanu ghosh
         [Route("api/loginOrganization", Name = "LoginOrganization")]
         public IHttpActionResult LoginOrganization(LoginData logindata)
         {

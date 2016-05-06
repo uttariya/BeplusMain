@@ -1,5 +1,5 @@
 ﻿using System;
-//Tirthanu Ghosh
+//author-Tirthanu Ghosh
 namespace beplusService.DataObjects
 {
     public class BepEventDTO

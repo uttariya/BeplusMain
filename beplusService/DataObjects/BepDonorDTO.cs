@@ -1,5 +1,5 @@
 ﻿using Microsoft.WindowsAzure.Mobile.Service;
-//Tirthanu Ghosh
+//author-Tirthanu Ghosh
 namespace beplusService.DataObjects
 {
     public class BepDonorDTO

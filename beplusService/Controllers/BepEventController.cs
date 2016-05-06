@@ -9,7 +9,7 @@ using beplusService.Models;
 using System.Collections.Generic;
 using System.Device.Location;
 using System;
-//uttariya bandhu,Tirthanu Ghosh
+//author-uttariya bandhu,Tirthanu Ghosh
 namespace beplusService.Controllers
 {
     public class BepEventController : TableController<BepEvent>
@@ -54,7 +54,7 @@ namespace beplusService.Controllers
         {
             return DeleteAsync(id);
         }
-        //uttariya bandhu
+        //author-uttariya bandhu
         [Route("api/createEvent", Name = "CreateEvent")]
         public async Task<IHttpActionResult> CreateEvent(BepEventDTO bepEventDTO)
         {   //date check working
@@ -104,6 +104,7 @@ namespace beplusService.Controllers
             BepEvent current = await InsertAsync(bepEvent);
             return CreatedAtRoute("CreateEvent", new { id = current.Id }, AutoMapper.Mapper.Map<BepEventDTO>(current));
         }
+        //author-tirthanu ghosh
         [Route("api/getAllOrgEvents", Name = "GetAllOrgEvents")]
         [HttpGet]
         public List<BepEventDTO> GetAllOrgEvents(string OrgId)

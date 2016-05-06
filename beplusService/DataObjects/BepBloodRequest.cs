@@ -1,6 +1,6 @@
 ﻿using Microsoft.WindowsAzure.Mobile.Service;
 using System;
-//uttariya bandhu,Tirthanu Ghosh
+//author-uttariya bandhu,Tirthanu Ghosh
 namespace beplusService.DataObjects
 {
     public class BepBloodRequest:EntityData

@@ -8,7 +8,7 @@ using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-//uttariya bandhu
+//author-uttariya bandhu
 namespace WebApplication1
 {
     public partial class WebForm2 : System.Web.UI.Page
@@ -19,12 +19,13 @@ namespace WebApplication1
             var x = Request.QueryString["donorId"];
             string pass = key.pass;
             string responsetxt;
-            {
+            {//create a get request and call honorblood
                 WebRequest request = WebRequest.Create(new Uri("http://beplus.azure-mobile.net/api/honorBloodRequest?Id=" + g.ToString()+"&donorId="+x.ToString()));
                 String encoded = System.Convert.ToBase64String(Encoding.ASCII.GetBytes("" + ":" + pass));
                 request.Credentials = CredentialCache.DefaultCredentials;
                 request.Method = "GET";
                 request.Headers.Add("Authorization", "Basic " + encoded);
+                //basic authntication using key
                 request.PreAuthenticate = true;
                 responsetxt = "";
                 try

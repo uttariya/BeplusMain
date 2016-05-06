@@ -9,7 +9,7 @@ using System.Web;
 using System.Web.Script.Serialization;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-//uttariya bandhu
+//author-uttariya bandhu
 namespace WebApplication1
 {
     public partial class WebForm1 : System.Web.UI.Page
@@ -21,24 +21,27 @@ namespace WebApplication1
             string pass = key.pass;
             string responsetxt;
             if ((x.ToString()).Equals("1"))
-            {
+            {//request to activate donor
                 WebRequest request = WebRequest.Create(new Uri("http://beplus.azure-mobile.net/api/activateDonor?Id=" + g.ToString()));
                 String encoded = System.Convert.ToBase64String(Encoding.ASCII.GetBytes("" + ":" + pass));
                 request.Credentials = CredentialCache.DefaultCredentials;
                 request.Method = "GET";
                 request.Headers.Add("Authorization", "Basic " + encoded);
+                //authenticating
                 request.PreAuthenticate = true;
                 try
-                {
+                {//creating a reaponse object
                     HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                    //encoding the request 
                     var encoding = Encoding.GetEncoding(response.CharacterSet);
+                    //requesting for response and reading the message
                     using (var responseStream = response.GetResponseStream())
                     using (var reader = new StreamReader(responseStream, encoding))
                         responsetxt = reader.ReadToEnd();
                     Label1.Text = responsetxt;
                 }
                 catch (WebException b)
-                {
+                {//handling the exception if response is not OK 200
                     using (WebResponse response = b.Response)
                     {
                         HttpWebResponse httpResponse = (HttpWebResponse)response;

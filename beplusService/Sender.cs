@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Net.Mail;
 using SendGrid;
-//uttariya bandhu
+//author-uttariya bandhu
 namespace beplusService
 {
     class Sender
@@ -20,7 +20,7 @@ namespace beplusService
                 myMessage.From = new MailAddress("notifications@beplus.azure-mobile.net", "bePlus team");
                 myMessage.Subject = subject;
                 myMessage.Html = body;
-                //var apikey = "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";
+                //send mail;
                 var transportWeb = new Web(new NetworkCredential("azure_a9b6040e6f10e841c60a8e2b7af87e82@azure.com", "Nagin420"));
                 transportWeb.Deliver(myMessage);
             }
