@@ -17,11 +17,11 @@ namespace beplusService
             {
                 var myMessage = new SendGrid.SendGridMessage();
                 myMessage.AddTo(Email);
-                myMessage.From = new MailAddress("notifications@beplus.azure-mobile.net", "bePlus team");
+                myMessage.From = new MailAddress("sender_address", "sender_name");
                 myMessage.Subject = subject;
                 myMessage.Html = body;
                 //send mail;
-                var transportWeb = new Web(new NetworkCredential("azure_a9b6040e6f10e841c60a8e2b7af87e82@azure.com", "Nagin420"));
+                var transportWeb = new Web(new NetworkCredential("email", "pwd"));
                 transportWeb.Deliver(myMessage);
             }
             catch (Exception e)
