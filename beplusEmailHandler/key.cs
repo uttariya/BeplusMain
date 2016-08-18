@@ -7,6 +7,6 @@ namespace WebApplication1
 {
     public class key
     {
-        public static string pass = "MTSpEOSVNXNxGyoVoeZMqnnIIGBqmk93";
+        public static string pass = "**********************";
     }
 }
